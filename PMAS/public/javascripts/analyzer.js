@@ -85,6 +85,8 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         var histogram	= new Float32Array(10);
         WebAudiox.ByteToNormalizedFloat32Array(freqData, histogram);
         
+        var histogramEnlarged = new Float32Array(20);
+        
         // amplify the histogram
         for(var i = 0; i < histogram.length; i++) {
             histogram[i]	= (histogram[i])*barAmpMod/50;

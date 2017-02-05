@@ -9,7 +9,7 @@ body {
 }
 
 h1 {
-    font-size: 30pt;
+    font-size: 40pt;
     color: white;
     margin: 0;
 }
@@ -21,19 +21,55 @@ h1 {
     align-items: center;
     justify-content: center;
     background: rgba(255,255,255,0.2);
-    width: 30%;
-    height:7%;
+    width: 50%;
+    height:10%;
     margin: 0 auto;
     border-radius: 5px;
 }
 
-#canvas {
-    display:block;
+#middle {
+    display:flex;
     height: 70%;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#canvas {
+    height: 100%;
     width: 70%;
     margin: 0 auto;
     
     border: 3px solid rgba(255,255,255,0.4);
+}
+
+.middleSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    height: 80%;
+    width: 12.5%;
+    background: rgba(255,255,255,0.4);
+}
+
+.colorPicker {
+    width: 80%;
+    height: 17.5%;
+    margin: 2.5%;
+    text-align: center;
+    font-size: 15px;
+}
+
+#bottom {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height:10%;
+    width: 100%;
 }
 
 #formWrapper {
@@ -44,15 +80,26 @@ h1 {
     background: rgba(255,255,255,0.3);
 
     width: 20%;
-    height: 10%;
+    height: 100%;
     margin: 0 auto;
     
     border-radius: 5px;
 }
 
 #startButton {
-    margin: 0 auto;
+    margin: 10px auto;
 }
 #form {
-    margin: 0 auto;
+    margin: 5px auto;
+}
+
+.bottomSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100%;
+    width: 20%;
+    background: rgba(255,255,255,0.3);
 }

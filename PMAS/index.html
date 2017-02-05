@@ -3,24 +3,43 @@
 <script src='/javascripts/analyzer.js'></script>
 <script src='/javascripts/canvas.js'></script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+<script src="/javascripts/jscolor.js"></script>
+
 <link rel="stylesheet" href="/stylesheets/styles.css">
 
 <body style='background-color: #000000'>
     
     <div id = "titleWrapper">
-        <h1> Play Me A Song!</h1>
+        <h1> Music Visualizer</h1>
     </div>
     
-    <canvas id = "canvas">
-    </canvas>
+    <div id = "middle">
+        <div id = "middleLeft" class = "middleSide">
+        </div>
+        <canvas id = "canvas">
+        </canvas>
+        <div id = "middleRight" class = "middleSide">
+            <p style = "color: white; font-size: 20px;"> Bar Color Picker </p>
+            <input id = "color4" onchange="update4(this.jscolor);" class="jscolor colorPicker" value = 'ffffff'>
+            <input id = "color3" onchange="update3(this.jscolor);" class="jscolor colorPicker" value = 'ffff00'>
+            <input id = "color2" onchange="update2(this.jscolor);" class="jscolor  colorPicker" value = 'ff0000'>
+            <input id = "color1" onchange="update1(this.jscolor);" class="jscolor colorPicker" value = '000000'>
+        </div>
+    </div>
     
-    <div id = "formWrapper">
-        <form id="form" enctype="multipart/form-data" onsubmit="return false">
-            <input type="file" id="musicFile" name = "musicFile"/>
-            <input type="submit" id="submit" name="submit" onclick = "info();"/>
-        </form>
-        <button onclick = "drawCanvas();" id = "startButton"> Start! </button>
-
+    <div id = "bottom">
+        <div id = "bottomLeft" class = "bottomSide">
+        </div>
+        <div id = "formWrapper">
+            <form id="form" enctype="multipart/form-data" onsubmit="return false">
+                <input type="file" id="musicFile" name = "musicFile"/>
+                <input type="submit" id="submit" name="submit" onclick = "info();"/>
+            </form>
+            <button onclick = "drawCanvas();" id = "startButton"> Start! </button>
+        </div>
+        <div id = "bottomRight" class = "bottomSide">
+        </div>
     </div>
     
     <script>

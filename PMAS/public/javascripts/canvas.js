@@ -1,4 +1,10 @@
+var source;
+
 function drawCanvas () {
+    //temporary button disable
+    document.getElementById("startButton").disabled = true;
+    setTimeout(function(){document.getElementById("startButton").disabled = false;},5000);
+    
     var context	= new AudioContext();
 
     // Create lineOut
@@ -12,11 +18,16 @@ function drawCanvas () {
     //get file input
     musicFile = "/javascripts/A Sky Full of Stars.mp3";
     
+    //stop music
+    if (source) {
+        source.stop(0);
+    }
+    
     // load a sound and play it immediately
     WebAudiox.loadBuffer(context, musicFile, function(buffer){
-        var source	= context.createBufferSource();
+        source	= context.createBufferSource();
         source.buffer	= buffer;
-        source.loop	= true;
+        source.loop	= false;
         source.connect(lineOut.destination);
         source.start(0);
     });
@@ -36,4 +47,6 @@ function drawCanvas () {
         // put the sound in the canvas
         analyzerCanvas.update();
     })
+    //clear canvas at the end
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }

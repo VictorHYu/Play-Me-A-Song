@@ -3,7 +3,8 @@
 <script src='/javascripts/analyzer.js'></script>
 <script src='/javascripts/canvas.js'></script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="/javascripts/jscolor.js"></script>
 
 <link rel="stylesheet" href="/stylesheets/styles.css">
@@ -21,44 +22,51 @@
         </canvas>
         <div id = "middleRight" class = "middleSide">
             <p style = "color: white; font-size: 20px;"> Bar Color Picker </p>
-            <input id = "color4" onchange="update4(this.jscolor);" class="jscolor colorPicker" value = 'ffffff'>
-            <input id = "color3" onchange="update3(this.jscolor);" class="jscolor colorPicker" value = 'ffff00'>
-            <input id = "color2" onchange="update2(this.jscolor);" class="jscolor  colorPicker" value = 'ff0000'>
-            <input id = "color1" onchange="update1(this.jscolor);" class="jscolor colorPicker" value = '000000'>
+            <input id = "color4" onchange="update4(this.jscolor);" class="jscolor colorPicker" value = 'FFFFFF'>
+            <input id = "color3" onchange="update3(this.jscolor);" class="jscolor colorPicker" value = '2CFF8E'>
+            <input id = "color2" onchange="update2(this.jscolor);" class="jscolor  colorPicker" value = '1975FF'>
+            <input id = "color1" onchange="update1(this.jscolor);" class="jscolor colorPicker" value = '2700C4'>
         </div>
     </div>
     
     <div id = "bottom">
         <div id = "bottomLeft" class = "bottomSide">
+            <div class="dropup">
+                <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"> Select Track
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li role="presentation"><a role="menuitem" class = "action"  tabindex="-1">A Sky Full of Stars - Coldplay</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Airplanes - B.o.B</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Fade - Alan Walker</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Hey Soul Sister - Train</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Jar of Hearts - Christina Perri</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Maps - Maroon 5</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Perfect - Hedley</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Save Me - BTS</a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Talking to the Moon - Bruno Mars </a></li>
+                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">What I've Done - Linkin Park</a></li>
+                </ul>
+            </div>
         </div>
-        <div id = "formWrapper">
-            <form id="form" enctype="multipart/form-data" onsubmit="return false">
-                <input type="file" id="musicFile" name = "musicFile"/>
-                <input type="submit" id="submit" name="submit" onclick = "info();"/>
-            </form>
-            <button onclick = "drawCanvas();" id = "startButton"> Start! </button>
+        <div id = "bottomMidLeft" class = "bottomMidSide">
+            <p> Selected Song:</p>
+            <p id = "selectedSong">A Sky Full of Stars - Coldplay</p>
+        </div>
+        <button onclick = "disableButton(); pickAudio(); drawCanvas();" id = "startButton"> Start! </button>
+        <div id = "bottomMidRight" class = "bottomMidSide">
         </div>
         <div id = "bottomRight" class = "bottomSide">
+            <button class="btn btn-primary" id="fileSelector" type="button"> Upload </button
         </div>
     </div>
-    
     <script>
+        function disableButton () {
+            document.getElementById("startButton").disabled = true;
+            setTimeout(function(){document.getElementById("startButton").disabled = false;},5000);
+        };
         
-        function info() {
-            var musicFile = document.getElementById("musicFile");
-            console.log("size: " + musicFile.size);
-            console.log(musicFile.pathname);
-        }
-    
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                drawCanvas(input);
-            }
-        }
-
-        $("#musicFile").change(function(){
-            readURL(this);
+        jQuery(".action").click(function(e){
+            document.getElementById("selectedSong").innerHTML = $(this).html();
         });
-        
-        </script>
+    </script>
 </body>

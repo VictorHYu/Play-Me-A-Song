@@ -4,10 +4,10 @@ var WebAudiox	= WebAudiox	|| {};
 var canvasCtx;
 var gradient;
 
-var c4 = '#ffffff';
-var c3 = '#ffff00';
-var c2 = '#ff0000';
-var c1 = '#000000';
+var c4 = '#FFFFFF';
+var c3 = '#2CFF8E';
+var c2 = '#1975FF';
+var c1 = '#2700C4';
 
 function update1(jscolor) {
     c1 = '#' + jscolor;

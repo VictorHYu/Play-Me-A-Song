@@ -1,10 +1,7 @@
 var source;
+var musicFile = "/music/A Sky Full of Stars.mp3";
 
 function drawCanvas () {
-    //temporary button disable
-    document.getElementById("startButton").disabled = true;
-    setTimeout(function(){document.getElementById("startButton").disabled = false;},5000);
-    
     var context	= new AudioContext();
 
     // Create lineOut
@@ -14,9 +11,6 @@ function drawCanvas () {
     var analyzer	= context.createAnalyser();
     analyzer.connect(lineOut.destination);
     lineOut.destination	= analyzer;
-
-    //get file input
-    musicFile = "/javascripts/A Sky Full of Stars.mp3";
     
     //stop music
     if (source) {
@@ -49,4 +43,37 @@ function drawCanvas () {
     })
     //clear canvas at the end
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+var A_Sky_Full_of_Stars     = "/music/A Sky Full of Stars.mp3";
+var Airplanes               = "/music/Airplanes.mp3";
+var Fade                    = "/music/Fade.mp3";
+var Hey_Soul_Sister         = "/music/Hey Soul Sister.mp3";
+var Jar_of_Hearts           = "/music/Jar of Hearts.mp3";
+var Maps                    = "/music/Maps.mp3";
+var Perfect                 = "/music/Perfect.mp3";
+var Save_Me                 = "/music/Save Me.mp3";
+var Talking_to_the_Moon     = "/music/Talking to the Moon.mp3";
+var What_Ive_Done           = "/music/What I've Done.mp3";
+
+function pickAudio() {
+    var temp = document.getElementById("selectedSong").innerHTML;
+    if (temp === "Airplanes - B.o.B")
+        musicFile = Airplanes;
+    else if (temp === "Fade - Alan Walker")
+        musicFile = Fade;
+    else if (temp === "Hey Soul Sister - Train")
+        musicFile = Hey_Soul_Sister;
+    else if (temp === "Jar of Hearts - Christina Perri")
+        musicFile = Jar_of_Hearts;
+    else if (temp === "Maps - Maroon 5")
+        musicFile = Maps;
+    else if (temp === "Perfect - Hedley")
+        musicFile = Perfect;
+    else if (temp === "Save Me - BTS")
+        musicFile = Save_Me;
+    else if (temp === "Talking to the Moon - Bruno Mars")
+        musicFile = Talking_to_the_Moon;
+    else if (temp === "What I've Done - Linkin Park")
+        musicFile = What_Ive_Done;
 }

@@ -1,3 +1,9 @@
+html {
+    background: URL("/images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 body {
     display:flex;
     flex-direction: column;
@@ -6,6 +12,8 @@ body {
     height: 100vh;
     width: 100vw;
     margin: 0;
+    
+    background: rgba(0,0,0,0.85);
 }
 
 /*-----------------  TOP*/
@@ -57,7 +65,12 @@ h1 {
     
     height: 80%;
     width: 12.5%;
-/*    background: rgba(255,255,255,0.4);*/
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}
+
+.leftText {
+    color: rgba(255,255,255,0.8);
 }
 
 .colorPicker {

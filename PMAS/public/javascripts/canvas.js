@@ -32,6 +32,7 @@ function drawCanvas () {
 
     // create the object
     var analyzerCanvas	= new WebAudiox.Analyzer(analyzer, canvas);
+    var beatDetector = new WebAudiox.AnalyserBeatDetector(analyzer, canvas);
 
     // loop and update
     requestAnimationFrame(function update() {
@@ -40,6 +41,7 @@ function drawCanvas () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // put the sound in the canvas
         analyzerCanvas.update();
+        beatDetector.update();
     })
     //clear canvas at the end
     ctx.clearRect(0, 0, canvas.width, canvas.height);

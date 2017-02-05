@@ -4,6 +4,24 @@ var WebAudiox	= WebAudiox	|| {};
 var canvasCtx;
 var gradient;
 
+var lineOpacityMod  = 50;
+var lineAmpMod      = 50;
+var barAmpMod       = 50;
+var thresholdMod    = 50;
+
+$( function() {
+  $("input").change(function() {
+    if (this.id === "lineOpacity")
+        lineOpacityMod = this.value;
+    else if (this.id === "lineAmp")
+        lineAmpMod = this.value;
+    else if (this.id === "barAmp")
+        barAmpMod = this.value;
+    else if (this.id === "threshold")
+        thresholdMod = this.value;
+  });
+});
+  
 var c4 = '#FFFFFF';
 var c3 = '#2CFF8E';
 var c2 = '#1975FF';
@@ -42,12 +60,14 @@ WebAudiox.Analyzer = function(analyzer, canvas){
     canvasCtx		= canvas.getContext("2d");
     updateAllColors();
     
-    canvasCtx.lineWidth	= 1;
-    canvasCtx.strokeStyle	= "rgba(255, 255, 255, 0.2)";
+    canvasCtx.lineWidth	= 0.5;
     
     var analyzer2volume	= new WebAudiox.Analyser2Volume(analyzer);
     
     this.update	= function(){
+        
+        //update settings
+        canvasCtx.strokeStyle	= "rgba(255, 255, 255, " + lineOpacityMod/50 * 0.5 + ")";
         
         // draw a circle
         var maxRadius	= Math.min(canvas.height, canvas.width) * 0.3;
@@ -64,6 +84,14 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         // normalized
         var histogram	= new Float32Array(10);
         WebAudiox.ByteToNormalizedFloat32Array(freqData, histogram);
+        
+        // amplify the histogram
+        for(var i = 0; i < histogram.length; i++) {
+            histogram[i]	= (histogram[i])*barAmpMod/50;
+            if ( histogram[i] > 1)
+                histogram[i] = 1;
+        }
+        
         // draw the spectrum
         var barStep	= canvas.width / (histogram.length-1);
         var barWidth	= barStep*0.8;
@@ -80,9 +108,9 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         var histogram	= new Float32Array(60);
         WebAudiox.ByteToNormalizedFloat32Array(timeData, histogram);
         
-        // amplify the histogram
+        // amplify the histogram for the line
         for(var i = 0; i < histogram.length; i++) {
-            histogram[i]	= (histogram[i]-0.5)/3+0.5
+            histogram[i]	= ((histogram[i]-0.5)/3*lineAmpMod/50+0.5);
         }
         // draw the spectrum
         var barStep	= canvas.width / (histogram.length-1)
@@ -93,5 +121,52 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         }
         canvasCtx.stroke()
     }	
+}
+
+WebAudiox.AnalyserBeatDetector	= function(analyser, onBeat){
+    // arguments default values
+    this.holdTime		= 1
+    this.decayRate		= 0.97
+    this.minVolume		= 0.6
+    this.frequencyBinCount	= 100
+    
+    var holdingTime	= 0
+    this.update	= function(delta){
+        var threshold	= this.minVolume + 0.2*thresholdMod/50;
+        var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
+        if( holdingTime > 0 ){
+            holdingTime	-= delta
+            holdingTime	= Math.max(holdingTime, 0)
+        }else if( rawVolume > threshold ){
+            canvasCtx.fillStyle = "rgba(255,255,255,0.1)";
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            holdingTime	= this.holdTime;
+            threshold	= rawVolume * 1.1;
+            threshold	= Math.max(threshold, this.minVolume);
+        }else{
+            threshold	*= this.decayRate;
+            threshold	= Math.max(threshold, this.minVolume);
+        }
+    }
+}
+
+WebAudiox.AnalyserBeatDetector.compute	= function(analyser, width, offset){
+    // handle paramerter
+    width		= width  !== undefined ? width	: analyser.frequencyBinCount;
+    offset		= offset !== undefined ? offset	: 0;
+    // inint variable
+    var freqByte	= new Uint8Array(analyser.frequencyBinCount);
+    // get the frequency data
+    analyser.getByteFrequencyData(freqByte);
+    // compute the sum
+    var sum	= 0;
+    for(var i = offset; i < offset+width; i++){
+        sum	+= freqByte[i];
+    }
+    // complute the amplitude
+    var amplitude	= sum / (width*256-1);
+    // return ampliture
+    return amplitude;
 }
 

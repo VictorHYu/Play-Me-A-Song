@@ -1,15 +1,15 @@
 <!doctype html>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script src='/javascripts/webaudiox-master/build/webaudiox.js'></script>
 <script src='/javascripts/analyzer.js'></script>
 <script src='/javascripts/canvas.js'></script>
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="/javascripts/jscolor.js"></script>
 
 <link rel="stylesheet" href="/stylesheets/styles.css">
 
-<body style='background-color: #000000'>
+<body>
     
     <div id = "titleWrapper">
         <h1> Music Visualizer</h1>
@@ -17,6 +17,17 @@
     
     <div id = "middle">
         <div id = "middleLeft" class = "middleSide">
+            <h3 class = "leftText"> Line Settings </h3>
+            <p class = "leftText"> Opacity </p>
+            <input id = "lineOpacity" type = "range" class = "slider">
+            <p class = "leftText"> Amplitude</p>
+            <input id = "lineAmp" type = "range" class = "slider">
+            <h3 class = "leftText"> Bar Settings </h3>
+            <p class = "leftText"> Amplitude</p>
+            <input id = "barAmp" type = "range" class = "slider">
+            <h3 class = "leftText"> Flash Settings </h3>
+            <p class = "leftText"> Threshold</p>
+            <input id = "threshold" type = "range" class = "slider">
         </div>
         <canvas id = "canvas">
         </canvas>

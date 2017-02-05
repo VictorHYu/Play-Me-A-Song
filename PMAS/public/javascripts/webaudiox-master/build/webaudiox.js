@@ -328,7 +328,8 @@ WebAudiox.loadBuffer	= function(context, url, onLoad, onError){
 	onError		= onError	|| function(){}
         if( url instanceof Blob ){
 		var request	= new FileReader();
-        } else {
+        }
+        else {
 		var request	= new XMLHttpRequest()
 		request.open('GET', url, true)
 		request.responseType	= 'arraybuffer'

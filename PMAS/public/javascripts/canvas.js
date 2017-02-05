@@ -10,7 +10,7 @@ function drawCanvas () {
     lineOut.destination	= analyzer;
 
     //get file input
-    var musicFile = document.getElementById("musicFile");
+    musicFile = "/javascripts/A Sky Full of Stars.mp3";
     
     // load a sound and play it immediately
     WebAudiox.loadBuffer(context, musicFile, function(buffer){
@@ -22,11 +22,8 @@ function drawCanvas () {
     });
 
     // create and add the canvas
-    var canvas	= document.createElement('canvas');
-    canvas.width	= window.innerWidth/2;
-    canvas.height	= window.innerHeight/2;
+    var canvas = document.getElementById("canvas");
     var ctx		= canvas.getContext("2d");
-    document.body.appendChild(canvas);
 
     // create the object
     var analyzerCanvas	= new WebAudiox.Analyzer(analyzer, canvas);

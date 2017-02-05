@@ -2,13 +2,44 @@
 <script src='/javascripts/webaudiox-master/build/webaudiox.js'></script>
 <script src='/javascripts/analyzer.js'></script>
 <script src='/javascripts/canvas.js'></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/stylesheets/styles.css">
 
-<body style='margin: 0; overflow: hidden; background-color: #FFFFFF'>
+<body style='background-color: #000000'>
     
-    <h1> Play Me A Song!</h1>
-    <div>
-        <input type="file" id="musicFile">
-        <button onclick = "drawCanvas();"> Start! </button>
+    <div id = "titleWrapper">
+        <h1> Play Me A Song!</h1>
     </div>
+    
+    <canvas id = "canvas">
+    </canvas>
+    
+    <div id = "formWrapper">
+        <form id="form" enctype="multipart/form-data" onsubmit="return false">
+            <input type="file" id="musicFile" name = "musicFile"/>
+            <input type="submit" id="submit" name="submit" onclick = "info();"/>
+        </form>
+        <button onclick = "drawCanvas();" id = "startButton"> Start! </button>
+
+    </div>
+    
+    <script>
         
+        function info() {
+            var musicFile = document.getElementById("musicFile");
+            console.log("size: " + musicFile.size);
+            console.log(musicFile.pathname);
+        }
+    
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                drawCanvas(input);
+            }
+        }
+
+        $("#musicFile").change(function(){
+            readURL(this);
+        });
+        
+        </script>
 </body>

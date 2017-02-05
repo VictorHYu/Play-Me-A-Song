@@ -70,8 +70,10 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         canvasCtx.strokeStyle	= "rgba(255, 255, 255, " + lineOpacityMod/50 * 0.5 + ")";
         
         // draw a circle
-        var maxRadius	= Math.min(canvas.height, canvas.width) * 0.3;
-        var radius	= 1 + analyzer2volume.smoothedValue() * maxRadius;
+        gradientCircle	= "rgba(255,255,255,0.1)";
+        canvasCtx.fillStyle = gradientCircle;
+        var maxRadius	= Math.min(canvas.height, canvas.width) * 1;
+        var radius	= 5 + analyzer2volume.smoothedValue() * maxRadius*3;
         canvasCtx.beginPath();
         canvasCtx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true);
         canvasCtx.closePath();
@@ -86,20 +88,26 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         WebAudiox.ByteToNormalizedFloat32Array(freqData, histogram);
         
         var histogramEnlarged = new Float32Array(20);
+        for (var i = 0; i < 10; i++) {
+            histogramEnlarged[9-i] = histogram[i];
+            if(i < 9)
+            histogramEnlarged[10+i] = (histogram[i] + histogram[i+1])/2;
+            else histogramEnlarged[10+i] = histogram[i];
+        }
         
         // amplify the histogram
-        for(var i = 0; i < histogram.length; i++) {
-            histogram[i]	= (histogram[i])*barAmpMod/50;
-            if ( histogram[i] > 1)
-                histogram[i] = 1;
+        for(var i = 0; i < histogramEnlarged.length; i++) {
+            histogramEnlarged[i]	= (histogramEnlarged[i])*barAmpMod/50;
+            if ( histogramEnlarged[i] > 1)
+                histogramEnlarged[i] = 1;
         }
         
         // draw the spectrum
-        var barStep	= canvas.width / (histogram.length-1);
+        var barStep	= canvas.width / (histogramEnlarged.length-1);
         var barWidth	= barStep*0.8;
         canvasCtx.fillStyle	= gradient;
-        for(var i = 0; i < histogram.length; i++){
-            canvasCtx.fillRect(i*barStep, (1-histogram[i])*canvas.height, barWidth, canvas.height);
+        for(var i = 0; i < histogramEnlarged.length; i++){
+            canvasCtx.fillRect(i*barStep, (1-histogramEnlarged[i])*canvas.height, barWidth, canvas.height);
         }
 
         //		display ByteTimeDomainData

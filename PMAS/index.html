@@ -3,6 +3,7 @@
 <script src='/javascripts/webaudiox-master/build/webaudiox.js'></script>
 <script src='/javascripts/analyzer.js'></script>
 <script src='/javascripts/canvas.js'></script>
+<script src='/javascripts/uploads.js'></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="/javascripts/jscolor.js"></script>
@@ -65,9 +66,10 @@
         </div>
         <button onclick = "disableButton(); pickAudio(); drawCanvas();" id = "startButton"> Start! </button>
         <div id = "bottomMidRight" class = "bottomMidSide">
+             <input id="fileSelector" type="file" name="uploads[]">
         </div>
         <div id = "bottomRight" class = "bottomSide">
-            <button class="btn btn-primary" id="fileSelector" type="button"> Upload </button
+            <button class="btn btn-primary" type="button"> Upload </button>
         </div>
     </div>
     <script>

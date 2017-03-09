@@ -57,6 +57,7 @@ var Perfect                 = "/music/Perfect.mp3";
 var Save_Me                 = "/music/Save Me.mp3";
 var Talking_to_the_Moon     = "/music/Talking to the Moon.mp3";
 var What_Ive_Done           = "/music/What I've Done.mp3";
+var Uploaded_File           = "/uploadedFile.mp3";
 
 function pickAudio() {
     var temp = document.getElementById("selectedSong").innerHTML;
@@ -78,4 +79,6 @@ function pickAudio() {
         musicFile = Talking_to_the_Moon;
     else if (temp === "What I've Done - Linkin Park")
         musicFile = What_Ive_Done;
+    else if (temp === "Uploaded File")
+        musicFile = Uploaded_File;
 }

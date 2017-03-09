@@ -18,6 +18,7 @@ app.get('/', function(req, res) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 //handles file uploads
 app.post('/upload', function(req, res){
@@ -25,7 +26,7 @@ app.post('/upload', function(req, res){
     form.uploadDir = path.join(__dirname, '/uploads');
 
     form.on('file', function(field, file) {
-        fs.rename(file.path, path.join(form.uploadDir, "uploadedFile"));
+        fs.rename(file.path, path.join(form.uploadDir, "uploadedFile.mp3"));
     });
 
     form.parse(req);

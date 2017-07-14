@@ -1,6 +1,7 @@
 {
   "name": "PMAS",
   "version": "0.0.0",
+  "engines": "6.11.1",
   "private": true,
   "scripts": {
     "start": "node ./PMAS/bin/www"

@@ -10,77 +10,77 @@
 
 <link rel="stylesheet" href="/stylesheets/styles.css">
 
-<body>
+<body class="flex-center flex-column">
     
-    <div id = "titleWrapper">
-        <h1> Eye Hear A Song!</h1>
+    <div id="title-wrapper" class="flex-center">
+        <h1>Eye Hear A Song!</h1>
     </div>
     
-    <div id = "middle">
-        <div id = "middleLeft" class = "middleSide">
-            <h3 class = "leftText"> Line Settings </h3>
-            <p class = "leftText"> Opacity </p>
-            <input id = "lineOpacity" type = "range" class = "slider">
-            <p class = "leftText"> Amplitude</p>
-            <input id = "lineAmp" type = "range" class = "slider">
-            <h3 class = "leftText"> Bar Settings </h3>
-            <p class = "leftText"> Amplitude</p>
-            <input id = "barAmp" type = "range" class = "slider">
-            <h3 class = "leftText"> Flash Settings </h3>
-            <p class = "leftText"> Threshold</p>
-            <input id = "threshold" type = "range" class = "slider">
+    <div id="middle" class="flex-center">
+        <div id="middle-left" class="middle-side flex-center flex-column">
+            <h3 class="left-text">Line Settings</h3>
+            <p class="left-text">Opacity</p>
+            <input id="line-opacity" type="range" class="slider">
+            <p class="left-text">Amplitude</p>
+            <input id="lineAmp" type="range" class="slider">
+            <h3 class="left-text">Bar Settings</h3>
+            <p class="left-text">Amplitude</p>
+            <input id="bar-amp" type="range" class="slider">
+            <h3 class="left-text">Flash Settings</h3>
+            <p class="left-text">Threshold</p>
+            <input id="threshold" type="range" class="slider">
         </div>
-        <canvas id = "canvas">
+        <canvas id="canvas">
         </canvas>
-        <div id = "middleRight" class = "middleSide">
-            <p style = "color: white; font-size: 20px;"> Bar Color Picker </p>
-            <input id = "color4" onchange="update4(this.jscolor);" class="jscolor colorPicker" value = 'FFFFFF'>
-            <input id = "color3" onchange="update3(this.jscolor);" class="jscolor colorPicker" value = '2CFF8E'>
-            <input id = "color2" onchange="update2(this.jscolor);" class="jscolor  colorPicker" value = '1975FF'>
-            <input id = "color1" onchange="update1(this.jscolor);" class="jscolor colorPicker" value = '2700C4'>
+        <div id="middle-right" class="middle-side flex-center flex-column">
+            <p style="color: white; font-size: 20px;">Bar Color Picker</p>
+            <input id="color4" onchange="update4(this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
+            <input id="color3" onchange="update3(this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
+            <input id="color2" onchange="update2(this.jscolor);" class="jscolor  color-picker" value='1975FF'>
+            <input id="color1" onchange="update1(this.jscolor);" class="jscolor color-picker" value='2700C4'>
         </div>
     </div>
     
-    <div id = "bottom">
-        <div id = "bottomLeft" class = "bottomSide">
-            <div class="dropup">
-                <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"> Select Track
+    <div id="bottom" class="flex-center">
+        <div id="bottom-left" class="bottom-side flex-center flex-column">
+            <div class="dropdown-up">
+                <button class="btn btn-primary dropdown-toggle" id="song-menu" type="button" data-toggle="dropdown"> Select Track
                     <span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li role="presentation"><a role="menuitem" class = "action"  tabindex="-1">A Sky Full of Stars - Coldplay</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Airplanes - B.o.B</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Fade - Alan Walker</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Hey Soul Sister - Train</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Jar of Hearts - Christina Perri</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Maps - Maroon 5</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Perfect - Hedley</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Save Me - BTS</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Talking to the Moon - Bruno Mars </a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">What I've Done - Linkin Park</a></li>
-                    <li role="presentation"><a role="menuitem" class = "action" tabindex="-1">Uploaded File</a></li>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="song-menu">
+                    <li role="presentation"><a role="menuitem" class="action"  tabindex="-1">A Sky Full of Stars - Coldplay</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Airplanes - B.o.B</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Fade - Alan Walker</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Hey Soul Sister - Train</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Jar of Hearts - Christina Perri</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Maps - Maroon 5</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Perfect - Hedley</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Save Me - BTS</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Talking to the Moon - Bruno Mars </a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">What I've Done - Linkin Park</a></li>
+                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Uploaded File</a></li>
                 </ul>
             </div>
         </div>
-        <div id = "bottomMidLeft" class = "bottomMidSide">
+        <div id="bottom-mid-left" class="bottom-mid-side">
             <p> Selected Song:</p>
-            <p id = "selectedSong">A Sky Full of Stars - Coldplay</p>
+            <p id="selected-song">A Sky Full of Stars - Coldplay</p>
         </div>
-        <button onclick = "disableButton(); pickAudio(); drawCanvas();" id = "startButton"> Start! </button>
-        <div id = "bottomMidRight" class = "bottomMidSide">
-             <input id="fileSelector" type="file" name="uploads[]" accept=".mp3">
+        <button id="start-button" onclick="disableButton(); pickAudio(); drawCanvas();"> Start! </button>
+        <div id="bottom-mid-right" class="bottom-mid-side">
+             <input id="file-selector" type="file" name="uploads[]" accept=".mp3">
         </div>
-        <div id = "bottomRight" class = "bottomSide">
+        <div id="bottom-right" class="bottom-side">
             <button class="btn btn-primary" type="button"> Upload </button>
         </div>
     </div>
     <script>
         function disableButton () {
-            document.getElementById("startButton").disabled = true;
-            setTimeout(function(){document.getElementById("startButton").disabled = false;},5000);
+            document.getElementById("start-button").disabled=true;
+            setTimeout(function(){document.getElementById("start-button").disabled=false;},5000);
         };
         
         jQuery(".action").click(function(e){
-            document.getElementById("selectedSong").innerHTML = $(this).html();
+            document.getElementById("selected-song").innerHTML=$(this).html();
         });
     </script>
 </body>

@@ -1,14 +1,12 @@
+/*-----------------  GENERAL*/
+
 html {
-    background: URL("/images/background2.jpg");
+    background: URL("/images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 body {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     width: 100vw;
     margin: 0;
@@ -16,21 +14,31 @@ body {
     background: rgba(0,0,0,0.85);
 }
 
-/*-----------------  TOP*/
-
 h1 {
     font-size: 40pt;
     color: white;
     margin: 0;
 }
 
-#titleWrapper {
-    position:relative;
+.flex-center {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-/*    background: rgba(255,255,255,0.2);*/
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.margin-center {
+    margin: 0 auto;
+}
+
+/*-----------------  TOP*/
+
+#title-wrapper {
+    position: relative;
     margin-bottom: 20px;
     width: 100%;
     height:10%;
@@ -41,12 +49,8 @@ h1 {
 /*-----------------  MIDDLE*/
 
 #middle {
-    display:flex;
     height: 70%;
     width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
 #canvas {
@@ -57,23 +61,18 @@ h1 {
     border: 3px solid rgba(255,255,255,0.4);
 }
 
-.middleSide{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
+.middle-side{
     height: 80%;
     width: 12.5%;
     background: rgba(255,255,255,0.3);
     border-radius: 10px;
 }
 
-.leftText {
+.left-text {
     color: rgba(255,255,255,0.8);
 }
 
-.colorPicker {
+.color-picker {
     width: 80%;
     height: 17.5%;
     margin: 2.5%;
@@ -86,16 +85,11 @@ h1 {
 /*-----------------  BOTTOM*/
 
 #bottom {
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height:15%;
+    height: 15%;
     width: 100%;
-/*    background: rgba(255,255,255,0.5);*/
 }
 
-#startButton {
+#start-button {
     margin: 0px auto;
     height: 50%;
     width: 20%;
@@ -105,11 +99,11 @@ h1 {
     background: rgba(255,255,255,0.8);
 }
 
-#startButton:disabled {
+#start-button:disabled {
     background: rgba(255,255,255,0.4);
 }
 
-.bottomSide{
+.bottom-side{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,10 +111,9 @@ h1 {
     
     height: 100%;
     width: 20%;
-/*    background: rgba(255,255,255,0.3);*/
 }
 
-.bottomMidSide{
+.bottom-mid-side{
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -133,12 +126,12 @@ h1 {
     font-size: 15pt;
 }
 
-.dropup {
+.dropdown-up {
     height: 50%;
     width: 50%;
 }
 
-#menu1{
+#song-menu{
     height:100%;
     width: 100%;
     border: 4px solid rgba(255,255,255,0.3);

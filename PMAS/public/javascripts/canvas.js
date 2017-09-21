@@ -60,7 +60,7 @@ var What_Ive_Done           = "/music/What I've Done.mp3";
 var Uploaded_File           = "/uploadedFile.mp3";
 
 function pickAudio() {
-    var temp = document.getElementById("selectedSong").innerHTML;
+    var temp = document.getElementById("selected-song").innerHTML;
     if (temp === "Airplanes - B.o.B")
         musicFile = Airplanes;
     else if (temp === "Fade - Alan Walker")

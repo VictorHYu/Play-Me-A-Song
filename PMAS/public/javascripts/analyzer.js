@@ -11,11 +11,11 @@ var thresholdMod    = 50;
 
 $( function() {
   $("input").change(function() {
-    if (this.id === "lineOpacity")
+    if (this.id === "line-opacity")
         lineOpacityMod = this.value;
-    else if (this.id === "lineAmp")
+    else if (this.id === "line-amp")
         lineAmpMod = this.value;
-    else if (this.id === "barAmp")
+    else if (this.id === "bar-amp")
         barAmpMod = this.value;
     else if (this.id === "threshold")
         thresholdMod = this.value;
@@ -147,14 +147,14 @@ WebAudiox.AnalyserBeatDetector	= function(analyser, onBeat){
         if( holdingTime > 0 ){
             holdingTime	-= delta
             holdingTime	= Math.max(holdingTime, 0)
-        }else if( rawVolume > threshold ){
+        } else if( rawVolume > threshold ){
             canvasCtx.fillStyle = "rgba(255,255,255,0.1)";
             canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
             
             holdingTime	= this.holdTime;
             threshold	= rawVolume * 1.1;
             threshold	= Math.max(threshold, this.minVolume);
-        }else{
+        } else{
             threshold	*= this.decayRate;
             threshold	= Math.max(threshold, this.minVolume);
         }

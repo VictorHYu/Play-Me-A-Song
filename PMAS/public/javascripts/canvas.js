@@ -1,7 +1,7 @@
 var source;
 var musicFile = "/music/A Sky Full of Stars.mp3";
 
-function drawCanvas () {
+function drawCanvas() {
     var context	= new AudioContext();
 
     // Create lineOut
@@ -19,8 +19,8 @@ function drawCanvas () {
     
     // load a sound and play it immediately
     WebAudiox.loadBuffer(context, musicFile, function(buffer){
-        source	= context.createBufferSource();
-        source.buffer	= buffer;
+        source = context.createBufferSource();
+        source.buffer = buffer;
         source.loop	= false;
         source.connect(lineOut.destination);
         source.start(0);

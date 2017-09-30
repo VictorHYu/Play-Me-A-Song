@@ -18,7 +18,6 @@ WebAudiox.AbsoluteNormalizer	= function(){
 	}
 }
 
-
 var WebAudiox	= WebAudiox	|| {}
 
 // TODO to rewrite with a simple weight average on a history array

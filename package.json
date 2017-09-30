@@ -5,7 +5,7 @@
     "node": "8.6.0",
     "npm": "5.4.2",
     "yarn": "0.24.6"
-  }
+  },
   "private": true,
   "scripts": {
     "start": "node ./PMAS/bin/www"

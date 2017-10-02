@@ -1,12 +1,13 @@
 <!doctype html>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script src="/javascripts/webaudiox.js"></script>
+<script src="/javascripts/lib/webaudiox.js"></script>
 <script src="/javascripts/analyzer.js"></script>
 <script src="/javascripts/canvas.js"></script>
 <script src="/javascripts/uploads.js"></script>
+<script src="/javascripts/javascript.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="/javascripts/jscolor.min.js"></script>
+<script src="/javascripts/lib/jscolor.min.js"></script>
 
 <link rel="stylesheet" href="/stylesheets/styles.css">
 
@@ -33,11 +34,11 @@
         <canvas id="canvas">
         </canvas>
         <div id="middle-right" class="middle-side flex-center flex-column">
-            <p style="color: white; font-size: 20px;">Bar Color Picker</p>
-            <input id="color4" onchange="update4(this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
-            <input id="color3" onchange="update3(this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
-            <input id="color2" onchange="update2(this.jscolor);" class="jscolor  color-picker" value='1975FF'>
-            <input id="color1" onchange="update1(this.jscolor);" class="jscolor color-picker" value='2700C4'>
+            <h3>Bar Colour</h4>
+            <input onchange="update(0, this.jscolor);" class="jscolor color-picker" value='2700C4'>
+            <input onchange="update(1, this.jscolor);" class="jscolor color-picker" value='1975FF'>
+            <input onchange="update(2, this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
+            <input onchange="update(3, this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
         </div>
     </div>
     
@@ -47,17 +48,17 @@
                 <button class="btn btn-primary dropdown-toggle" id="song-menu" type="button" data-toggle="dropdown"> Select Track
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="song-menu">
-                    <li role="presentation"><a role="menuitem" class="action"  tabindex="-1">A Sky Full of Stars - Coldplay</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Airplanes - B.o.B</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Fade - Alan Walker</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Hey Soul Sister - Train</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Jar of Hearts - Christina Perri</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Maps - Maroon 5</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Perfect - Hedley</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Save Me - BTS</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Talking to the Moon - Bruno Mars </a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">What I've Done - Linkin Park</a></li>
-                    <li role="presentation"><a role="menuitem" class="action" tabindex="-1">Uploaded File</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">A Sky Full of Stars - Coldplay</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Airplanes - B.o.B</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Fade - Alan Walker</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Hey Soul Sister - Train</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Jar of Hearts - Christina Perri</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Maps - Maroon 5</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Perfect - Hedley</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Save Me - BTS</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Talking to the Moon - Bruno Mars </a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">What I've Done - Linkin Park</a></li>
+                    <li role="presentation"><a role="menuitem" class="song-selection" tabindex="-1">Uploaded File</a></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +66,7 @@
             <p> Selected Song:</p>
             <p id="selected-song">A Sky Full of Stars - Coldplay</p>
         </div>
-        <button id="start-button" onclick="disableButton(); pickAudio(); drawCanvas();"> Start! </button>
+        <button id="start-button"> Start! </button>
         <div id="bottom-mid-right" class="bottom-mid-side">
              <input id="file-selector" type="file" name="uploads[]" accept=".mp3">
         </div>
@@ -74,14 +75,4 @@
             <p id="upload-status"> None </p>
         </div>
     </div>
-    <script>
-        function disableButton () {
-            document.getElementById("start-button").disabled=true;
-            setTimeout(function(){document.getElementById("start-button").disabled=false;},5000);
-        };
-        
-        jQuery(".action").click(function(e){
-            document.getElementById("selected-song").innerHTML=$(this).html();
-        });
-    </script>
 </body>

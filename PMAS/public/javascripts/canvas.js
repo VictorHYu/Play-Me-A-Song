@@ -1,5 +1,5 @@
 var source;
-var musicFile = "/music/A Sky Full of Stars.mp3";
+var musicFile = '/music/A Sky Full of Stars.mp3';
 
 function drawCanvas() {
     var context	= new AudioContext();
@@ -47,20 +47,20 @@ function drawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-var A_Sky_Full_of_Stars     = "/music/A Sky Full of Stars.mp3";
-var Airplanes               = "/music/Airplanes.mp3";
-var Fade                    = "/music/Fade.mp3";
-var Hey_Soul_Sister         = "/music/Hey Soul Sister.mp3";
-var Jar_of_Hearts           = "/music/Jar of Hearts.mp3";
-var Maps                    = "/music/Maps.mp3";
-var Perfect                 = "/music/Perfect.mp3";
-var Save_Me                 = "/music/Save Me.mp3";
-var Talking_to_the_Moon     = "/music/Talking to the Moon.mp3";
-var What_Ive_Done           = "/music/What I've Done.mp3";
-var Uploaded_File           = "/uploadedFile.mp3";
+var A_Sky_Full_of_Stars     = '/music/A Sky Full of Stars.mp3';
+var Airplanes               = '/music/Airplanes.mp3';
+var Fade                    = '/music/Fade.mp3';
+var Hey_Soul_Sister         = '/music/Hey Soul Sister.mp3';
+var Jar_of_Hearts           = '/music/Jar of Hearts.mp3';
+var Maps                    = '/music/Maps.mp3';
+var Perfect                 = '/music/Perfect.mp3';
+var Save_Me                 = '/music/Save Me.mp3';
+var Talking_to_the_Moon     = '/music/Talking to the Moon.mp3';
+var What_Ive_Done           = '/music/What I\'ve Done.mp3';
+var Uploaded_File           = '/uploadedFile.mp3';
 
 function pickAudio() {
-    var temp = document.getElementById("selected-song").innerHTML;
+    var temp = $('#selected-song').html();
     if (temp === "Airplanes - B.o.B")
         musicFile = Airplanes;
     else if (temp === "Fade - Alan Walker")

@@ -21,44 +21,27 @@ $( function() {
         thresholdMod = this.value;
   });
 });
-  
-var c4 = '#FFFFFF';
-var c3 = '#2CFF8E';
-var c2 = '#1975FF';
-var c1 = '#2700C4';
 
-function update1(jscolor) {
-    c1 = '#' + jscolor;
-    updateAllColors();
+var colours = ['#2700C4', '#1975FF', '#2CFF8E', '#FFFFFF'];
+
+function update(index, jscolor) {
+    colours[index] = '#' + jscolor;
+    recolourCanvas();
 }
 
-function update2(jscolor) {
-    c2 = '#' + jscolor;
-    updateAllColors();
-}
-
-function update3(jscolor) {
-    c3 = '#' + jscolor;
-    updateAllColors();
-}
-
-function update4(jscolor) {
-    c4 = '#' + jscolor;
-    updateAllColors();
-}
-
-function updateAllColors() {
+function recolourCanvas() {
     gradient	= canvasCtx.createLinearGradient(0,0,0,canvas.height);
-    gradient.addColorStop(1.00,c1);
-    gradient.addColorStop(0.75,c2);
-    gradient.addColorStop(0.25,c3);
-    gradient.addColorStop(0.00,c4);
+    
+    for (i = 0; i < 4; i++) {
+        gradient.addColorStop(0.25 + (0.25 * i), colours[i]);
+    }
+
     canvasCtx.fillStyle	= gradient;
 }
 
 WebAudiox.Analyzer = function(analyzer, canvas){
     canvasCtx		= canvas.getContext("2d");
-    updateAllColors();
+    recolourCanvas();
     
     canvasCtx.lineWidth	= 0.5;
     

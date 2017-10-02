@@ -27,8 +27,8 @@ function drawCanvas() {
     });
 
     // create and add the canvas
-    var canvas = document.getElementById("canvas");
-    var ctx		= canvas.getContext("2d");
+    var canvas = document.getElementById('canvas');
+    var ctx		= canvas.getContext('2d');
 
     // create the object
     var analyzerCanvas	= new WebAudiox.Analyzer(analyzer, canvas);

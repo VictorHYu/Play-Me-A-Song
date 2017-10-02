@@ -21,12 +21,12 @@
         <div id="middle-left" class="middle-side flex-center flex-column">
             <h3 class="left-text">Line Settings</h3>
             <p class="left-text">Opacity</p>
-            <input id="line-opacity" type="range" class="slider">
+            <input id="lineOpacity" type="range" class="slider">
             <p class="left-text">Amplitude</p>
             <input id="lineAmp" type="range" class="slider">
             <h3 class="left-text">Bar Settings</h3>
             <p class="left-text">Amplitude</p>
-            <input id="bar-amp" type="range" class="slider">
+            <input id="barAmp" type="range" class="slider">
             <h3 class="left-text">Flash Settings</h3>
             <p class="left-text">Threshold</p>
             <input id="threshold" type="range" class="slider">
@@ -35,10 +35,10 @@
         </canvas>
         <div id="middle-right" class="middle-side flex-center flex-column">
             <h3>Bar Colour</h4>
-            <input onchange="update(0, this.jscolor);" class="jscolor color-picker" value='2700C4'>
-            <input onchange="update(1, this.jscolor);" class="jscolor color-picker" value='1975FF'>
-            <input onchange="update(2, this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
-            <input onchange="update(3, this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
+            <input onchange="updateColour(0, this.jscolor);" class="jscolor color-picker" value='2700C4'>
+            <input onchange="updateColour(1, this.jscolor);" class="jscolor color-picker" value='1975FF'>
+            <input onchange="updateColour(2, this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
+            <input onchange="updateColour(3, this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
         </div>
     </div>
     

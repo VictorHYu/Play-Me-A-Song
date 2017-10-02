@@ -6,7 +6,7 @@ $( function() {
     // file upload success
     if (files.length > 0) {
                          
-      alert("Upload Starting!");
+      $('#upload-status').text("Uploading...");
                          
       // post file data to server
       var formData = new FormData();
@@ -20,7 +20,7 @@ $( function() {
         processData: false, // processes data and changes it into a query string
         contentType: false,
         success: function(res) {
-          console.log(res);
+          $('#upload-status').text("Complete");
         },
         xhr: function() {
           var xhr = new XMLHttpRequest();

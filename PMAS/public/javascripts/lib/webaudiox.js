@@ -1,54 +1,60 @@
+/*  WebAudiox helpers for WebAudio API
+ *    (Partial - unused helpers removed)
+ *
+ *  By jeromeetienne (https://github.com/jeromeetienne/webaudiox)
+ *  MIT License
+ */
+
 var WebAudiox	= WebAudiox	|| {}
 
-WebAudiox.AbsoluteNormalizer	= function(){
-	var maxThreshold	= -Infinity;
-	var minThreshold	= +Infinity;
-	this.update	= function(value){
-		// TODO make be good to smooth those values over time, thus it would forget
-		// it would be the adaptative
-		// and this one being absolute
-		if( value < minThreshold ) minThreshold	= value
-		if( value > maxThreshold ) maxThreshold = value
-		// to avoid division by zero
-		if( maxThreshold === minThreshold )	return value;
-		// compute normalized value
-		var normalized	= (value - minThreshold) / (maxThreshold-minThreshold);
-		// return the just built normalized value between [0, 1]
-		return normalized;
-	}
+WebAudiox.AnalyserBeatDetector = function(analyser, onBeat) {
+    // arguments default values
+    this.holdTime = 1;
+    this.decayRate = 0.97;
+    this.minVolume = 0.6;
+    this.frequencyBinCount = 100;
+    var holdingTime    = 0;
+    
+    this.update    = function(delta) {
+        var threshold = this.minVolume + 0.2*settings.threshold/50;
+        var rawVolume = WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
+        if( holdingTime > 0 ) {
+            holdingTime    -= delta
+            holdingTime    = Math.max(holdingTime, 0)
+        }
+        else if ( rawVolume > threshold ) {
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            holdingTime    = this.holdTime;
+            threshold = rawVolume * 1.1;
+            threshold = Math.max(threshold, this.minVolume);
+        }
+        else {
+            threshold *= this.decayRate;
+            threshold = Math.max(threshold, this.minVolume);
+        }
+    }
 }
 
-var WebAudiox	= WebAudiox	|| {}
-
-// TODO to rewrite with a simple weight average on a history array
-// - simple and no magic involved
-
-WebAudiox.AdaptativeNormalizer	= function(factorForMin, factorForMax){
-	var minThreshold	= 0;
-	var maxThreshold	= 1;
-	this.update	= function(value){
-		// smooth adapatation
-		var smoothOut	= 0.01
-		var smoothIn	= 0.01
-		if( value < minThreshold )	minThreshold += (value-minThreshold)*smoothOut
-		else				minThreshold += (value-minThreshold)*smoothIn
-		if( value > maxThreshold )	maxThreshold += (value-maxThreshold)*smoothOut
-		else				maxThreshold += (value-maxThreshold)*smoothIn
-		// ensure bound are respected
-		if( value < minThreshold ) value = minThreshold
-		if( value > maxThreshold ) value = maxThreshold
-		// to avoid division by zero
-		if( maxThreshold === minThreshold )	return value;
-		// compute normalized value
-console.log(minThreshold.toFixed(10),maxThreshold.toFixed(10))
-		var normalized	= (value - minThreshold) / (maxThreshold-minThreshold);
-		// return the just built normalized value between [0, 1]
-		return normalized;
-	}
+WebAudiox.AnalyserBeatDetector.compute    = function(analyser, width, offset) {
+    // handle parameter
+    width = width  !== undefined ? width : analyser.frequencyBinCount;
+    offset = offset !== undefined ? offset : 0;
+    // inint variable
+    var freqByte    = new Uint8Array(analyser.frequencyBinCount);
+    // get the frequency data
+    analyser.getByteFrequencyData(freqByte);
+    // compute the sum
+    var sum    = 0;
+    for(var i = offset; i < offset+width; i++) {
+        sum    += freqByte[i];
+    }
+    // complute the amplitude
+    var amplitude = sum / (width*256-1);
+    // return ampliture
+    return amplitude;
 }
-
-// @namespace defined WebAudiox name space
-var WebAudiox	= WebAudiox	|| {}
 
 /**
  * display an analyser node in a canvas
@@ -109,89 +115,6 @@ WebAudiox.Analyser2Volume.compute	= function(analyser, width, offset){
 	return amplitude;
 }
 
-var WebAudiox	= WebAudiox	|| {}
-
-/**
- * Generate a binaural sounds
- * http://htmlpreview.github.io/?https://github.com/ichabodcole/BinauralBeatJS/blob/master/examples/index.html
- * http://en.wikipedia.org/wiki/Binaural_beats
- * 
- * @param {Number} pitch    the frequency of the pitch (e.g. 440hz)
- * @param {Number} beatRate the beat rate of the binaural sound (e.g. around 2-10hz)
- * @param {Number} gain     the gain applied on the result
- */
-WebAudiox.BinauralSource	= function(context, pitch, beatRate, gain){
-	pitch	= pitch !== undefined ? pitch : 440
-	beatRate= beatRate !== undefined ? beatRate : 5
-	gain	= gain !== undefined ? gain : 1
-
-	var gainNode	= context.createGain()
-	this.output	= gainNode
-	var destination	= gainNode
-	
-	var compressor	= context.createDynamicsCompressor();
-	compressor.connect(destination)
-	destination	= compressor
-
-	var channelMerge= context.createChannelMerger()
-	channelMerge.connect(destination)
-	destination	= channelMerge
-	
-	var leftOscil	= context.createOscillator()
-	leftOscil.connect(destination)
-
-	var rightOscil	= context.createOscillator()
-	rightOscil.connect(destination)
-	
-	var updateNodes	= function(){
-		gainNode.gain.value		= gain
-		leftOscil.frequency.value	= pitch - beatRate/2
-		rightOscil.frequency.value	= pitch + beatRate/2	
-	}
-	// do the initial update
-	updateNodes();
-
-	this.getGain	= function(){
-		return gain
-	}
-	this.setGain	= function(value){
-		gain	= value
-		updateNodes();		
-	}
-	this.getPitch	= function(){
-		return pitch
-	}
-	this.setPitch	= function(value){
-		pitch	= value
-		updateNodes();		
-	}
-	this.getBeatRate= function(){
-		return beatRate
-	}
-	this.setBeatRate= function(value){
-		beatRate	= value
-		updateNodes();		
-	}
-	/**
-	 * start the source
-	 */
-	this.start	= function(delay){
-		delay	= delay !== undefined ? delay : 0
-		leftOscil.start(delay)
-		rightOscil.start(delay)
-	}
-	/** 
-	 * stop the source
-	 */
-	this.stop	= function(delay){
-		delay	= delay !== undefined ? delay : 0
-		leftOscil.stop(delay)
-		rightOscil.stop(delay)
-	}
-}
-var WebAudiox	= WebAudiox	|| {}
-
-
 /**
  * source is integers from 0 to 255,  destination is float from 0 to 1 non included
  * source and destination may not have the same length.
@@ -214,29 +137,6 @@ WebAudiox.ByteToNormalizedFloat32Array	= function(srcArray, dstArray, dstArrayLe
 		dstArray[i]	= sum/(last-first+1);
 	}
 }
-var WebAudiox	= WebAudiox	|| {}
-
-/**
- * generate buffer with jsfx.js 
- * @param  {AudioContext} context the WebAudio API context
- * @param  {Array} lib     parameter for jsfx
- * @return {[type]}         the just built buffer
- */
-WebAudiox.getBufferFromJsfx	= function(context, lib){
-	var params	= jsfxlib.arrayToParams(lib);
-	var data	= jsfx.generate(params);
-	var buffer	= context.createBuffer(1, data.length, 44100);
-	var fArray	= buffer.getChannelData(0);
-	for(var i = 0; i < fArray.length; i++){
-		fArray[i]	= data[i];
-	}
-	return buffer;
-}
-/**
- * @namespace definition of WebAudiox
- * @type {object}
- */
-var WebAudiox	= WebAudiox	|| {}
 
 /**
  * definition of a lineOut
@@ -303,9 +203,9 @@ WebAudiox.LineOut	= function(context){
 		var callback	= function(){
 			var isHidden	= document[documentStr] ? true : false
 			
-            //This line of code mutes audio when tab is inactive. This is bad!
-            
+            //This line of code mutes audio when tab is inactive
             //gainNode.gain.value	= isHidden ? 0 : 1
+            
 		}.bind(this)
 		// bind the event itself
 		document.addEventListener(eventStr, callback, false)
@@ -315,7 +215,6 @@ WebAudiox.LineOut	= function(context){
 		}
 	}
 }
-var WebAudiox	= WebAudiox	|| {}
 
 /**
  * Helper to load a buffer

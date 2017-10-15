@@ -1,6 +1,6 @@
-var WebAudiox	= WebAudiox	|| {};
+var WebAudiox = WebAudiox || {};
 
-var canvasCtx;
+var ctx;
 var gradient;
 var settings = {}
 
@@ -21,37 +21,59 @@ function updateColour(index, jscolor) {
 }
 
 function recolourCanvas() {
-    gradient = canvasCtx.createLinearGradient(0,0,0,canvas.height);
+    gradient = ctx.createLinearGradient(0,0,0,canvas.height);
     
     for (i = 0; i < 4; i++) {
         gradient.addColorStop(0.25 + (0.25 * i), colours[i]);
     }
 
-    canvasCtx.fillStyle	= gradient;
+    ctx.fillStyle = gradient;
 }
 
+// WebAudiox Analyzer 
 WebAudiox.Analyzer = function(analyzer, canvas){
-    canvasCtx = canvas.getContext('2d');
+    ctx = canvas.getContext('2d');
     recolourCanvas();
     
-    canvasCtx.lineWidth	= 0.5;
+    ctx.lineWidth	= 0.5;
     
-    var analyzer2volume	= new WebAudiox.Analyser2Volume(analyzer);
+    var volume = new WebAudiox.Analyser2Volume(analyzer);
     
     this.update	= function(){
         
         //update settings
-        canvasCtx.strokeStyle = 'rgba(255, 255, 255, ' + settings.lineOpacity/50 * 0.5 + ")";
+        ctx.strokeStyle = 'rgba(255, 255, 255, ' + settings.lineOpacity/50 * 0.5 + ")";
         
         // draw a circle
         gradientCircle = 'rgba(255,255,255,0.1)';
-        canvasCtx.fillStyle = gradientCircle;
+        ctx.fillStyle = gradientCircle;
         var maxRadius = Math.min(canvas.height, canvas.width) * 1;
-        var radius = 5 + analyzer2volume.smoothedValue() * maxRadius*3;
-        canvasCtx.beginPath();
-        canvasCtx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true);
-        canvasCtx.closePath();
-        canvasCtx.fill();
+        var radius = 5 + volume.smoothedValue() * maxRadius * 3;
+        ctx.beginPath();
+        ctx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();
+        
+        //        display ByteTimeDomainData
+        // get the average for the first channel
+        var timeData = new Uint8Array(analyzer.fftSize);
+        analyzer.getByteTimeDomainData(timeData);
+        // normalized
+        var histogram = new Float32Array(60);
+        WebAudiox.ByteToNormalizedFloat32Array(timeData, histogram);
+        
+        // amplify the histogram for the line
+        for(var i = 0; i < histogram.length; i++) {
+            histogram[i] = ((histogram[i]-0.5)/3*settings.lineAmp/50+0.5);
+        }
+        // draw the spectrum
+        var barStep    = canvas.width / (histogram.length-1)
+        ctx.beginPath()
+        for(var i = 0; i < histogram.length; i++) {
+            histogram[i] = (histogram[i]-0.5)*1.5+0.5
+            ctx.lineTo(i*barStep, (1-histogram[i])*canvas.height)
+        }
+        ctx.stroke();
         
         //		display	ByteFrequencyData
         // get the average for the first channel
@@ -80,80 +102,9 @@ WebAudiox.Analyzer = function(analyzer, canvas){
         // draw the spectrum
         var barStep	= canvas.width / (histogramEnlarged.length-1);
         var barWidth = barStep*0.8;
-        canvasCtx.fillStyle	= gradient;
+        ctx.fillStyle	= gradient;
         for(var i = 0; i < histogramEnlarged.length; i++){
-            canvasCtx.fillRect(i*barStep, (1-histogramEnlarged[i])*canvas.height, barWidth, canvas.height);
+            ctx.fillRect(i*barStep, (1-histogramEnlarged[i])*canvas.height, barWidth, canvas.height);
         }
-
-        //		display ByteTimeDomainData
-        // get the average for the first channel
-        var timeData = new Uint8Array(analyzer.fftSize);
-        analyzer.getByteTimeDomainData(timeData);
-        // normalized
-        var histogram = new Float32Array(60);
-        WebAudiox.ByteToNormalizedFloat32Array(timeData, histogram);
-        
-        // amplify the histogram for the line
-        for(var i = 0; i < histogram.length; i++) {
-            histogram[i] = ((histogram[i]-0.5)/3*settings.lineAmp/50+0.5);
-        }
-        // draw the spectrum
-        var barStep	= canvas.width / (histogram.length-1)
-        canvasCtx.beginPath()
-        for(var i = 0; i < histogram.length; i++) {
-            histogram[i] = (histogram[i]-0.5)*1.5+0.5
-            canvasCtx.lineTo(i*barStep, (1-histogram[i])*canvas.height)
-        }
-        canvasCtx.stroke()
     }	
 }
-
-WebAudiox.AnalyserBeatDetector = function(analyser, onBeat) {
-    // arguments default values
-    this.holdTime = 1;
-    this.decayRate = 0.97;
-    this.minVolume = 0.6;
-    this.frequencyBinCount = 100;
-    var holdingTime	= 0;
-    
-    this.update	= function(delta) {
-        var threshold = this.minVolume + 0.2*settings.threshold/50;
-        var rawVolume = WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
-        if( holdingTime > 0 ) {
-            holdingTime	-= delta
-            holdingTime	= Math.max(holdingTime, 0)
-        }
-        else if ( rawVolume > threshold ) {
-            canvasCtx.fillStyle = 'rgba(255,255,255,0.1)';
-            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            holdingTime	= this.holdTime;
-            threshold = rawVolume * 1.1;
-            threshold = Math.max(threshold, this.minVolume);
-        }
-        else {
-            threshold *= this.decayRate;
-            threshold = Math.max(threshold, this.minVolume);
-        }
-    }
-}
-
-WebAudiox.AnalyserBeatDetector.compute	= function(analyser, width, offset) {
-    // handle parameter
-    width = width  !== undefined ? width : analyser.frequencyBinCount;
-    offset = offset !== undefined ? offset : 0;
-    // inint variable
-    var freqByte	= new Uint8Array(analyser.frequencyBinCount);
-    // get the frequency data
-    analyser.getByteFrequencyData(freqByte);
-    // compute the sum
-    var sum	= 0;
-    for(var i = offset; i < offset+width; i++) {
-        sum	+= freqByte[i];
-    }
-    // complute the amplitude
-    var amplitude = sum / (width*256-1);
-    // return ampliture
-    return amplitude;
-}
-

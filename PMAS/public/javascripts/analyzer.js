@@ -6,10 +6,14 @@ var settings = {}
 
 $(
     function setup() {
-        settings.lineOpacity = 50;
-        settings.lineAmp = 50;
-        settings.barAmp = 50;
-        settings.threshold = 50;
+        settings.lineOpacity    = 50;
+        settings.lineAmp        = 50;
+        settings.barAmp         = 50;
+        settings.threshold      = 50;
+  
+        ctx = canvas.getContext('2d');
+        recolourCanvas();
+        ctx.lineWidth = 0.5;
     }
 );
 
@@ -32,11 +36,8 @@ function recolourCanvas() {
 
 // WebAudiox Analyzer 
 WebAudiox.Analyzer = function(analyzer, canvas){
-    ctx = canvas.getContext('2d');
-    recolourCanvas();
     
-    ctx.lineWidth	= 0.5;
-    
+    var beatDetector = new WebAudiox.AnalyserBeatDetector(analyzer, canvas);
     var volume = new WebAudiox.Analyser2Volume(analyzer);
     
     this.update	= function(){

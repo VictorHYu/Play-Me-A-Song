@@ -3,6 +3,12 @@ var isPlaying;      // boolean - if audio is playing
 var musicFile = '/music/A Sky Full of Stars.mp3';   // default music file
 
 function play() {
+    //stop music
+    if (source) {
+        source.stop(0);
+        isPlaying = false;
+    }
+    
     var context	= new AudioContext();
 
     // Create lineOut
@@ -12,11 +18,6 @@ function play() {
     var analyzer = context.createAnalyser();
     analyzer.connect(lineOut.destination);
     lineOut.destination	= analyzer;
-    
-    //stop music
-    if (source) {
-        source.stop(0);
-    }
 
     // create and add the canvas
     var canvas = document.getElementById( 'canvas' );
@@ -51,6 +52,7 @@ function play() {
             else {
                 // clear the canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                context.close();
             }
         });
     });

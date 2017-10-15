@@ -34,9 +34,12 @@ $( document ).ready(function() {
                     
     function pickAudio() {
         var songName = $( '#selected-song' ).html();
-        
+                    
         if (songName in presets) {
             musicFile = presets[songName];
+        }
+        else {
+            console.log("Error, can't find song");
         }
     }
 });

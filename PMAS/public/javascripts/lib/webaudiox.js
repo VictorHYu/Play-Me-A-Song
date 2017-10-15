@@ -52,7 +52,6 @@ WebAudiox.AnalyserBeatDetector.compute    = function(analyser, width, offset) {
     }
     // complute the amplitude
     var amplitude = sum / (width*256-1);
-    // return ampliture
     return amplitude;
 }
 

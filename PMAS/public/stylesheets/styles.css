@@ -33,7 +33,6 @@ body {
 
 h1, h2, h3, h4, p {
     color: white;
-    margin: 0;
 }
 
 h1 {
@@ -85,6 +84,10 @@ h1 {
     font-size: 15px;
     border: 5px solid rgba(255,255,255,0.4);
     border-radius: 5px;
+}
+
+#style-picker {
+    margin: 20px;
 }
 
 /*-----------------  BOTTOM*/

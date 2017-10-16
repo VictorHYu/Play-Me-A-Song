@@ -19,26 +19,30 @@
     
     <div id="middle" class="flex-center">
         <div id="middle-left" class="middle-side flex-center flex-column">
-            <h3 class="left-text">Line Settings</h3>
-            <p class="left-text">Opacity</p>
-            <input id="lineOpacity" type="range" class="slider">
+            <h3 class="left-text">Frequency</h3>
             <p class="left-text">Amplitude</p>
-            <input id="lineAmp" type="range" class="slider">
-            <h3 class="left-text">Bar Settings</h3>
-            <p class="left-text">Amplitude</p>
-            <input id="barAmp" type="range" class="slider">
-            <h3 class="left-text">Flash Settings</h3>
+            <input id="frequencyAmp" type="range" class="slider">
+            <h3 class="left-text">Beat Detection</h3>
             <p class="left-text">Threshold</p>
-            <input id="threshold" type="range" class="slider">
+            <input id="beatThreshold" type="range" class="slider">
+            <div id="style-picker" class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" id="song-menu" type="button" data-toggle="dropdown"> Select Style
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="song-menu">
+                    <li role="presentation"><a role="menuitem" class="analyzer-type" tabindex="-1">Histogram</a></li>
+                    <li role="presentation"><a role="menuitem" class="analyzer-type" tabindex="-1">Circular</a></li>
+                    <li role="presentation"><a role="menuitem" class="analyzer-type" tabindex="-1">Line</a></li>
+                </ul>
+            </div>
         </div>
         <canvas id="canvas">
         </canvas>
         <div id="middle-right" class="middle-side flex-center flex-column">
-            <h3>Bar Colour</h4>
-            <input onchange="updateColour(0, this.jscolor);" class="jscolor color-picker" value='2700C4'>
-            <input onchange="updateColour(1, this.jscolor);" class="jscolor color-picker" value='1975FF'>
-            <input onchange="updateColour(2, this.jscolor);" class="jscolor color-picker" value='2CFF8E'>
-            <input onchange="updateColour(3, this.jscolor);" class="jscolor color-picker" value='FFFFFF'>
+            <h3>Colour Scheme</h4>
+            <input id = 'colour0' onchange="updateColour(0, this.jscolor);" class="jscolor color-picker">
+            <input id = 'colour1' onchange="updateColour(1, this.jscolor);" class="jscolor color-picker">
+            <input id = 'colour2' onchange="updateColour(2, this.jscolor);" class="jscolor color-picker">
+            <input id = 'colour3' onchange="updateColour(3, this.jscolor);" class="jscolor color-picker">
         </div>
     </div>
     

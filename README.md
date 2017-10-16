@@ -14,3 +14,5 @@ Project originally started at QHacks 2017
 
 1.0 - Supports histogram view, preset songs, file uploads, various customizable settings
 
+2.0 - Added circular view, cleaned up code structure
+

@@ -23,8 +23,8 @@ function play() {
     var canvas = document.getElementById( 'canvas' );
     var ctx = canvas.getContext( '2d' );
 
-    // create the object
-    var analyzerCanvas = new WebAudiox.Analyzer(analyzer, canvas);
+    // create the analyzer object
+    var analyzerCanvas = new Analyzer(analyzer, canvas);
 
     // load music and play it immediately
     WebAudiox.loadBuffer(context, musicFile, function(buffer) {

@@ -22,6 +22,11 @@ $( document ).ready(function() {
     $( '.song-selection' ).click(function() {
         $( '#selected-song' ).html($( this ).html());
     });
+                    
+    // change analyzer type
+    $( '.analyzer-type' ).click(function() {
+        settings.type = $( this ).html();
+    });
           
     // settings change handler
     $( 'input' ).change(function() {

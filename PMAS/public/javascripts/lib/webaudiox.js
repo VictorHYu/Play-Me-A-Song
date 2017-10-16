@@ -3,6 +3,8 @@
  *
  *  By jeromeetienne (https://github.com/jeromeetienne/webaudiox)
  *  MIT License
+ *
+ *  Small modifications made
  */
 
 var WebAudiox	= WebAudiox	|| {}
@@ -15,24 +17,23 @@ WebAudiox.AnalyserBeatDetector = function(analyser, onBeat) {
     this.frequencyBinCount = 100;
     var holdingTime    = 0;
     
-    this.update    = function(delta) {
-        var threshold = this.minVolume + 0.2*settings.threshold/50;
+    this.update = function(delta) {
+        var threshold = this.minVolume + 0.2*settings.beatThreshold/50;
         var rawVolume = WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
         if( holdingTime > 0 ) {
             holdingTime    -= delta
             holdingTime    = Math.max(holdingTime, 0)
         }
         else if ( rawVolume > threshold ) {
-            ctx.fillStyle = 'rgba(255,255,255,0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
             holdingTime    = this.holdTime;
             threshold = rawVolume * 1.1;
             threshold = Math.max(threshold, this.minVolume);
+            return true
         }
         else {
             threshold *= this.decayRate;
             threshold = Math.max(threshold, this.minVolume);
+            return false
         }
     }
 }

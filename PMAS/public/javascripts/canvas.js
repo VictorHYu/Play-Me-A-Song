@@ -1,14 +1,31 @@
 var source;         // audio source
 var isPlaying;      // boolean - if audio is playing
 var musicFile = '/music/A Sky Full of Stars.mp3';   // default music file
+var metadata = {};
 
 function play() {
-    //stop music
+    // stop music
     if (source) {
         source.stop(0);
         isPlaying = false;
     }
     
+    var path = musicFile.includes("uploadedFile") ?
+        '/uploads' + musicFile : '/public' + musicFile;
+    
+    // get file metadata from server
+    $.ajax({
+        url: '/musicmetadata?filepath=' + path,
+        type: 'GET',
+        success: function(res) {
+           console.log("Music metadata retrieved!\n" + res);
+           metadata.title = res['title'];
+           metadata.artist = res['artist'];
+           metadata.album = res['album'];
+        },
+        dataType: 'json'
+    });
+
     var context	= new AudioContext();
 
     // Create lineOut
@@ -37,16 +54,14 @@ function play() {
                          
         source.onended = function() {
             isPlaying = false;
-        };
+        }
                          
         // animate
         requestAnimationFrame(function update() {
             if (isPlaying) {
-                //loop
+                //loop, clear canvas, update visuals
                 requestAnimationFrame(update);
-                // clear the canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // update visuals
                 analyzerCanvas.update();
             }
             else {

@@ -14,18 +14,26 @@ $( document ).ready(function() {
     // start button handler
     $( '#start-button' ).click(function() {
         disableButton();
-        pickAudio();
         play();
     });
 
     // change selected song when a new one is chosen
     $( '.song-selection' ).click(function() {
-        $( '#selected-song' ).html($( this ).html());
+        var songName = $( this ).html();
+                                 
+        $( '#selected-song' ).html(songName);
+        if (songName in presets) {
+            musicFile = presets[songName];
+        }
+        else {
+            console.log("Error, can't find song");
+        }
     });
                     
     // change analyzer type
     $( '.analyzer-type' ).click(function() {
         settings.type = $( this ).html();
+        $( '#current-style' ).html($( this ).html());
     });
           
     // settings change handler
@@ -36,17 +44,6 @@ $( document ).ready(function() {
             }
         }
     });
-                    
-    function pickAudio() {
-        var songName = $( '#selected-song' ).html();
-                    
-        if (songName in presets) {
-            musicFile = presets[songName];
-        }
-        else {
-            console.log("Error, can't find song");
-        }
-    }
 });
 
 var presets = {

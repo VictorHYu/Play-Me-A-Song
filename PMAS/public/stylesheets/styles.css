@@ -58,8 +58,8 @@ h1 {
 }
 
 #canvas {
-    height: 100%;
-    width: 70%;
+/*    height: 500px;*/
+/*    width: 800px;*/
     margin: 0 auto;
     
     border: 3px solid rgba(255,255,255,0.4);
@@ -121,10 +121,23 @@ h1 {
     width: 20%;
 }
 
-.bottom-mid-side{
+#bottom-mid-left {
     display: flex;
     flex-direction: column;
     align-items: left;
+    justify-content: center;
+    
+    height: 100%;
+    width: 15%;
+    
+    color: white;
+    font-size: 15pt;
+}
+
+#bottom-mid-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
     
     height: 100%;

@@ -10,18 +10,15 @@ var index = require('./routes/index');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
-// displays homepage when site is loaded
+/******************** Display index */
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
-
-// handles file uploads
+/******************** File uploads */
 app.post('/upload', function(req, res){
     console.log("Received file upload");
          
@@ -39,12 +36,12 @@ app.post('/upload', function(req, res){
     });
 });
 
-// handles retrieving file metadata
+/******************** Music Metadata */
 app.get('/musicmetadata', function(req, res) {
     console.log("Received metadata request");
-    
+        
     // get music metadata
-    var readableStream = fs.createReadStream(path.join(__dirname, 'uploads/uploadedFile.mp3'));
+    var readableStream = fs.createReadStream(path.join(__dirname, req.query.filepath));
     var parser = mm(readableStream, function (err, metadata) {
         if (err)
             throw err;
@@ -61,18 +58,18 @@ app.get('/musicmetadata', function(req, res) {
 /******************** Postgres Integration */
 const { Client } = require('pg');
 const client = new Client({
-                          connectionString: process.env.DATABASE_URL,
-                          ssl: true,
-                          });
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+});
 
 client.connect();
-
+/*
 client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-             if (err) throw err;
-             for (let row of res.rows) {
-             console.log(JSON.stringify(row));
-             }
-             client.end();
-             });
-
+    if (err) throw err;
+    for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+    }
+    client.end();
+});
+*/
 module.exports = app;

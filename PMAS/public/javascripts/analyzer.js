@@ -4,7 +4,6 @@
 var ctx;
 var settings = {}
 
-//var colours = ['#2700C4', '#1975FF', '#2CFF8E', '#FFFFFF'];
 var colours = ['#C49035', '#FF8037', '#FFF4DE', '#FFFFFF'];
 
 $(
@@ -56,6 +55,8 @@ Analyzer = function(analyzer, canvas){
         else if (settings.type == "Line") {
             displayLineAnalyzer();
         }
+        
+        displayMetadata();
     }
     
     function displayBarAnalyzer() {
@@ -94,10 +95,10 @@ Analyzer = function(analyzer, canvas){
             for (var i = 0; i < 3; i++) {
                 snowflakes.push({
                     x: Math.random() * canvas.width,
-                    dx: Math.random() * 2 - 1,
-                    y: Math.random() * -3,
-                    dy: Math.random() + 3,
-                    r: Math.random() + 0.5
+                    dx: Math.random() * 4 - 2,
+                    y: Math.random() * -6,
+                    dy: Math.random() * 2 + 6,
+                    r: Math.random() + 2
                 });
             }
         }
@@ -105,8 +106,8 @@ Analyzer = function(analyzer, canvas){
         // update snowflakes
         for (var i = 0; i < snowflakes.length; i++) {
             var s = snowflakes[i];
-            var speedBoostX = volume.rawValue() * 10;
-            var speedBoostY = volume.rawValue() * 10;
+            var speedBoostX = volume.rawValue() * 14;
+            var speedBoostY = volume.rawValue() * 14;
             
             s.x += s.dx + speedBoostX;
             s.y += s.dy + speedBoostY;
@@ -151,6 +152,39 @@ Analyzer = function(analyzer, canvas){
         ctx.fill();
     }
     
+    function displayLineAnalyzer() {
+        var freqData = new Uint8Array(analyzer.frequencyBinCount);
+        analyzer.getByteFrequencyData(freqData);
+        
+        // discard upper half of the array (uncommon frequencies)
+        freqData = freqData.slice(0, analyzer.frequencyBinCount / 2);
+        
+        var count = freqData.length;
+        var barwidth = canvas.width / (count - 3) * 2;
+        
+        ctx.fillStyle = colours[3];
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = colours[1];
+        ctx.strokeStyle = colours[2];
+        
+        // draw smoothed curve
+        var smooth = smoothData(freqData);
+        barwidth = canvas.width / smooth.length * 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(barwidth / 2, canvas.height / 2 - 5 * smooth[0]);
+        for (var i = 1; i < smooth.length; i++){
+            ctx.lineTo(i * barwidth / 2, canvas.height / 2 - 5 * smooth[i] + 5);
+        }
+        ctx.lineTo(canvas.width, 0);
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.closePath();
+        
+        ctx.fill();
+        ctx.stroke();
+    }
+    
     function getHistogramData() {
         // get the average for the first channel
         var freqData = new Uint8Array(analyzer.frequencyBinCount);
@@ -177,5 +211,15 @@ Analyzer = function(analyzer, canvas){
                 histogramEnlarged[i] = 1;
         }
         return histogramEnlarged;
+    }
+    
+    function displayMetadata() {
+        ctx.fillStyle = (settings.type == "Line") ? colours[0] : '#FFF';
+        ctx.font = '30px Arial';
+        ctx.fillText(metadata.title,10,50);
+        ctx.font = '23px Arial';
+        ctx.fillText(metadata.artist,10,90);
+        ctx.font = '15px Arial';
+        ctx.fillText(metadata.album,10,120);
     }
 }

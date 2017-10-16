@@ -6,7 +6,7 @@ $( function() {
     // file upload success
     if (files.length > 0) {
                          
-      $('#upload-status').text("Uploading...");
+      $( '#upload-status' ).text("Uploading...");
                          
       // post file data to server
       var formData = new FormData();
@@ -20,24 +20,15 @@ $( function() {
         processData: false, // processes data and changes it into a query string
         contentType: false,
         success: function(res) {
-          $('#upload-status').text("Complete");
+            $( '#upload-status' ).text("Complete");
+            $( '#selected-song' ).text("Uploaded File");
+            $( '.song-selection' ).click();
         },
         xhr: function() {
           var xhr = new XMLHttpRequest();
           return xhr;
         }
       })
-                  
-      // get file metadata from server
-      $.ajax({
-        url: '/musicmetadata',
-        type: 'GET',
-        data: 'placeholder',
-        success: function(res) {
-          console.log("Music metadata retrieved!\n" + res);
-        },
-        dataType: 'json'
-      });
     }
   });
 });

@@ -16,3 +16,5 @@ Project originally started at QHacks 2017
 
 2.0 - Added circular view, cleaned up code structure
 
+3.0 - Added line view, added music metadata display
+

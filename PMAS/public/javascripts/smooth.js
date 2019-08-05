@@ -6,20 +6,20 @@
  */
 
 function smoothData(data) {
-    var windowSize = 5;
+  var windowSize = 5;
 
-    var step = Math.floor(windowSize / 2);
+  var step = Math.floor(windowSize / 2);
 
-    var ans = new Array(data.length - 2 * step);
-    var C = [-2,-1,0,1,2];
+  var ans = new Array(data.length - 2 * step);
+  var C = [-2, -1, 0, 1, 2];
 
-    var det = 10;
-    for (var k = step; k < (data.length - step); k++) {
-        var d = 0;
-        for (var l = 0; l < C.length; l++)
-            d += C[l] * data[l + k - step] / det;
-        ans[k - step] = d;
-    }
+  var det = 10;
+  for (var k = step; k < (data.length - step); k++) {
+    var d = 0;
+    for (var l = 0; l < C.length; l++)
+      d += C[l] * data[l + k - step] / det;
+    ans[k - step] = d;
+  }
 
-    return ans;
+  return ans;
 }

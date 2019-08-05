@@ -1,6 +1,6 @@
 # Audio Visualizer
 
-###### Try me on heroku: eyehearasong.herokuapp.com
+###### [Try me](http://visualizer.vhyu.dev)
 
 Project originally started at QHacks 2017
 
@@ -8,7 +8,6 @@ Project originally started at QHacks 2017
 - Uses Web Audio API with the help of WebAudiox wrapper
 - Built on Node.js with Express
 - Deployed on Heroku
-
 
 ## Changelog
 

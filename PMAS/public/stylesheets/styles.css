@@ -1,53 +1,51 @@
 /*-----------------  GENERAL*/
 
-html {
-    background: URL("/images/background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
 body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    
-    background: rgba(0,0,0,0.85);
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  background: url("/images/shattered.png") repeat fixed center;
 }
 
 .flex-center {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .margin-center {
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+.margin-small {
+  margin: 3rem;
 }
 
 /*-----------------  TEXT*/
 
 h1, h2, h3, h4, p {
-    color: white;
+  color: black;
 }
 
 h1 {
-    font-size: 40pt;
+  font-size: 6rem;
 }
 
+h3 {
+  font-size: 1.7rem;
+}
 /*-----------------  TOP*/
 
 #title-wrapper {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-    height:10%;
-    margin: 0 auto;
-    border-radius: 5px;
+  position: relative;
+  width: 100%;
+  height: 10%;
+  margin: 0 auto;
 }
 
 /*-----------------  MIDDLE*/
@@ -58,131 +56,83 @@ h1 {
 }
 
 #canvas {
-/*    height: 500px;*/
-/*    width: 800px;*/
-    margin: 0 auto;
-    
-    border: 3px solid rgba(255,255,255,0.4);
+  background: whitesmoke;
+  margin: 0 auto;
+  border: 3px solid silver;
 }
 
 .middle-side{
-    height: 80%;
-    width: 12.5%;
-    background: rgba(255,255,255,0.3);
-    border-radius: 10px;
-}
-
-.left-text {
-    color: rgba(255,255,255,0.8);
+  height: 80%;
+  width: 22.5%;
+  margin: 0 2.5%;
+  background: rgb(200, 200, 200);
+  border-radius: 5px;
 }
 
 .color-picker {
-    width: 80%;
-    height: 17.5%;
-    margin: 2.5%;
-    text-align: center;
-    font-size: 15px;
-    border: 5px solid rgba(255,255,255,0.4);
-    border-radius: 5px;
+  width: 80%;
+  height: 17.5%;
+  margin: 2.5%;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 5px solid rgba(255,255,255,0.4);
+  border-radius: 5px;
 }
 
 #style-picker {
-    margin: 20px;
+  margin: 2rem;
 }
 
 /*-----------------  BOTTOM*/
 
 #bottom {
-    height: 15%;
-    width: 100%;
+  height: 15%;
+  width: 100%;
 }
 
 #start-button {
-    margin: 0px auto;
-    height: 50%;
-    width: 20%;
-    font-size: 30px;
-    border: 2px solid white;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.8);
+  margin: 0px auto;
+  height: 50%;
+  width: 20%;
+  font-size: 2.5rem;
+  border: 2px solid silver;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.8);
 }
 
 #start-button:disabled {
-    background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.4);
 }
 
-.bottom-side{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-    height: 100%;
-    width: 20%;
-}
-
-#bottom-mid-left {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    
-    height: 100%;
-    width: 15%;
-    
-    color: white;
-    font-size: 15pt;
-}
-
-#bottom-mid-right {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    
-    height: 100%;
-    width: 15%;
-    
-    color: white;
-    font-size: 15pt;
-}
-
-.dropup {
-    height: 50%;
-    width: 50%;
-}
-
-#song-menu{
-    height:100%;
-    width: 100%;
-    border: 4px solid rgba(255,255,255,0.3);
+.bottom-side {
+  height: 100%;
+  width: 35%;
 }
 
 /*--------------- Invalid screen size media queries */
 @media (max-width: 1200px) {
-    #title-wrapper {
-        display: none !important;
-    }
-    #middle {
-        display: none !important;
-    }
-    #bottom {
-        display: none !important;
-    }
-    #error-text{
-        display: inline !important;
-    }
-    
-    body {
-        text-align: center;
-        color: black;
-        background: white;
-    }
-    
-    html {
-        background: none;
-    }
+  #title-wrapper {
+    display: none !important;
+  }
+  #middle {
+    display: none !important;
+  }
+  #bottom {
+    display: none !important;
+  }
+  #error-text{
+    display: inline !important;
+  }
 
+  body {
+    text-align: center;
+    color: black;
+    background: silver;
+  }
+
+  html {
+    background: none;
+  }
 }
 
 
